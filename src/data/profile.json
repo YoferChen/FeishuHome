@@ -1,0 +1,23 @@
+{
+  "nickname": "张三",
+  "bio": "热爱技术，专注于 Web 全栈开发，擅长 Vue.js、TypeScript、Node.js 等技术栈。",
+  "email": "example@email.com",
+  "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
+  "socialLinks": [
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/username",
+      "icon": "github"
+    },
+    {
+      "platform": "LinkedIn",
+      "url": "https://linkedin.com/in/username",
+      "icon": "linkedin"
+    },
+    {
+      "platform": "Twitter",
+      "url": "https://twitter.com/username",
+      "icon": "twitter"
+    }
+  ]
+}

@@ -51,8 +51,11 @@ interface FeishuResponse<T = unknown> {
 
 /**
  * 飞书租户访问令牌响应
+ * 注意：tenant_access_token 在响应根级别，不在 data 中
  */
 interface TenantAccessTokenResponse {
+  code: number
+  msg: string
   tenant_access_token: string
   expire: number
 }
@@ -135,18 +138,18 @@ async function getTenantAccessToken(): Promise<string> {
       throw new Error(`HTTP 错误: ${response.status} ${response.statusText}`)
     }
     
-    const result = await response.json() as FeishuResponse<TenantAccessTokenResponse>
+    const result = await response.json() as TenantAccessTokenResponse
     
     if (result.code !== 0) {
-      throw new Error(`飞书 API 错误: ${result.msg}`)
+      throw new Error(`飞书 API 错误 (code: ${result.code}): ${result.msg}`)
     }
     
-    if (!result.data?.tenant_access_token) {
-      throw new Error('未能获取访问令牌')
+    if (!result.tenant_access_token) {
+      throw new Error(`未能获取访问令牌 - 响应数据: ${JSON.stringify(result)}`)
     }
     
     log('访问令牌获取成功', 'success')
-    return result.data.tenant_access_token
+    return result.tenant_access_token
   } catch (error) {
     log(`获取访问令牌失败: ${error instanceof Error ? error.message : String(error)}`, 'error')
     throw error
@@ -216,6 +219,25 @@ async function fetchBitableRecords(token: string): Promise<BitableRecord[]> {
 }
 
 /**
+ * 提取超链接字段的 URL
+ * 飞书超链接字段格式：{ text: "显示文本", link: "https://..." }
+ */
+function extractUrl(field: unknown): string {
+  if (!field) return ''
+  
+  // 如果是字符串，直接返回
+  if (typeof field === 'string') return field
+  
+  // 如果是对象，尝试提取 link 或 url 属性
+  if (typeof field === 'object' && field !== null) {
+    const obj = field as Record<string, unknown>
+    return String(obj.link || obj.url || '')
+  }
+  
+  return ''
+}
+
+/**
  * 将飞书记录转换为 Blog 对象
  * 导出以便测试
  */
@@ -229,8 +251,13 @@ export function transformRecordToBlog(record: BitableRecord): Blog | null {
     const summary = fields['摘要'] || fields['summary'] || ''
     const category = fields['分类'] || fields['category'] || '未分类'
     const publishedAt = fields['发布时间'] || fields['publishedAt'] || fields['published_at'] || new Date().toISOString()
-    const feishuDocUrl = fields['文档链接'] || fields['feishuDocUrl'] || fields['doc_url'] || ''
-    const coverImage = fields['封面图片'] || fields['coverImage'] || fields['cover_image']
+    
+    // 处理超链接字段
+    const docUrlField = fields['文档链接'] || fields['feishuDocUrl'] || fields['doc_url']
+    const feishuDocUrl = extractUrl(docUrlField)
+    
+    const coverImageField = fields['封面图片'] || fields['coverImage'] || fields['cover_image']
+    const coverImage = extractUrl(coverImageField)
     
     // 验证必填字段
     if (!title || !feishuDocUrl) {

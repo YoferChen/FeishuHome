@@ -20,9 +20,9 @@
 
 如果需要自定义基础路径，可以修改 `deploy.yml` 中的 `BASE_PATH` 环境变量。
 
-### 3. 配置飞书 API（可选）
+### 3. 配置飞书 API（必需）
 
-如果你想在构建时自动从飞书多维表格获取最新博客数据，需要：
+工作流已配置为在每次构建时自动从飞书多维表格获取最新博客数据。你需要配置以下 GitHub Secrets：
 
 #### 3.1 获取飞书应用凭证
 
@@ -33,26 +33,35 @@
    - `bitable:app` - 查看、评论、编辑和管理多维表格
    - `bitable:app:readonly` - 查看多维表格（只读）
 
-#### 3.2 配置 GitHub Secrets
+#### 3.2 获取多维表格 ID
+
+1. 打开你的飞书多维表格
+2. 从浏览器地址栏复制 URL，格式如下：
+   ```
+   https://xxx.feishu.cn/base/bascnxxxxxxxxxxxxxx?table=tblxxxxxxxxxxxxxx
+   ```
+3. 提取并组合 ID：
+   - `app_token`: `bascnxxxxxxxxxxxxxx`
+   - `table_id`: `tblxxxxxxxxxxxxxx`
+   - 组合格式：`bascnxxxxxxxxxxxxxx/tblxxxxxxxxxxxxxx`
+
+#### 3.3 配置 GitHub Secrets
 
 1. 进入你的 GitHub 仓库
-2. 点击 **Settings** > **Secrets and variables** > **Actions**
-3. 点击 **New repository secret** 添加以下密钥：
-   - `FEISHU_APP_ID`: 你的飞书应用 App ID
-   - `FEISHU_APP_SECRET`: 你的飞书应用 App Secret
+2. 点击 **Settings** (设置)
+3. 在左侧菜单中找到 **Secrets and variables** > **Actions**
+4. 点击 **New repository secret** 添加以下三个密钥：
 
-#### 3.3 启用数据预取步骤
+| 密钥名称 | 说明 | 示例值 |
+|---------|------|--------|
+| `FEISHU_APP_ID` | 飞书应用 App ID | `cli_xxxxxxxxxxxxxxxx` |
+| `FEISHU_APP_SECRET` | 飞书应用 App Secret | `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` |
+| `FEISHU_TABLE_ID` | 飞书多维表格 ID | `bascnxxxxxxxxxxxxxx/tblxxxxxxxxxxxxxx` |
 
-在 `deploy.yml` 文件中，取消注释以下部分：
-
-```yaml
-# 5. 预取博客数据（可选）
-- name: 预取博客数据
-  run: npm run fetch-blogs
-  env:
-    FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
-    FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
-```
+**重要提示**：
+- 这三个密钥都是必需的，缺少任何一个都会导致构建失败
+- 密钥值区分大小写，请确保准确复制
+- 密钥配置后，每次推送代码到 main 分支时，工作流会自动获取最新博客数据
 
 ### 4. 配置自定义域名（可选）
 
@@ -81,7 +90,7 @@
 2. **设置 Node.js**: 安装 Node.js 20 环境
 3. **安装依赖**: 使用 `npm ci` 安装项目依赖
 4. **运行测试**: 执行测试确保代码质量
-5. **预取博客数据** (可选): 从飞书获取最新博客数据
+5. **预取博客数据**: 从飞书多维表格获取最新博客数据（需要配置 Secrets）
 6. **构建项目**: 使用 Vite 构建生产版本
 7. **配置 Pages**: 配置 GitHub Pages 设置
 8. **上传构建产物**: 上传 `dist` 目录到 GitHub Pages
@@ -97,6 +106,7 @@
 | `BASE_PATH` | 网站基础路径 | 自动检测 |
 | `FEISHU_APP_ID` | 飞书应用 ID | - |
 | `FEISHU_APP_SECRET` | 飞书应用密钥 | - |
+| `FEISHU_TABLE_ID` | 飞书多维表格 ID | - |
 
 ## 故障排查
 

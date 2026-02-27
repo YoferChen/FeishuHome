@@ -45,16 +45,30 @@ jobs:
       - name: 运行测试
         run: npm run test
       
-      # 5. 预取博客数据（可选）
-      # 如果需要在构建时从飞书获取最新博客数据，请取消注释以下步骤
-      # 并在 GitHub Secrets 中配置 FEISHU_APP_ID 和 FEISHU_APP_SECRET
-      # - name: 预取博客数据
-      #   run: npm run fetch-blogs
-      #   env:
-      #     FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
-      #     FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+      # 5. 预取博客数据
+      # 从飞书多维表格获取最新博客数据
+      - name: 预取博客数据
+        run: npm run fetch-blogs
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+          FEISHU_TABLE_ID: ${{ secrets.FEISHU_TABLE_ID }}
       
-      # 6. 构建项目
+      # 6. 预取配置数据
+      # 从飞书多维表格获取网站配置、个人信息、教育经历、项目经历、里程碑、主题样式
+      - name: 预取配置数据
+        run: npm run fetch-config
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+          FEISHU_TABLE_ID_SITE_CONFIG: ${{ secrets.FEISHU_TABLE_ID_SITE_CONFIG }}
+          FEISHU_TABLE_ID_PROFILE: ${{ secrets.FEISHU_TABLE_ID_PROFILE }}
+          FEISHU_TABLE_ID_EDUCATION: ${{ secrets.FEISHU_TABLE_ID_EDUCATION }}
+          FEISHU_TABLE_ID_PROJECTS: ${{ secrets.FEISHU_TABLE_ID_PROJECTS }}
+          FEISHU_TABLE_ID_MILESTONES: ${{ secrets.FEISHU_TABLE_ID_MILESTONES }}
+          FEISHU_TABLE_ID_THEME: ${{ secrets.FEISHU_TABLE_ID_THEME }}
+      
+      # 7. 构建项目
       - name: 构建项目
         run: npm run build
         env:
@@ -63,11 +77,11 @@ jobs:
           # 如果部署在根路径（如 https://username.github.io/ 或自定义域名），则设置为 /
           BASE_PATH: ${{ github.event.repository.name != github.event.repository.owner.login && format('/{0}/', github.event.repository.name) || '/' }}
       
-      # 7. 配置 GitHub Pages
+      # 8. 配置 GitHub Pages
       - name: 配置 Pages
         uses: actions/configure-pages@v4
       
-      # 8. 上传构建产物
+      # 9. 上传构建产物
       - name: 上传构建产物
         uses: actions/upload-pages-artifact@v3
         with:

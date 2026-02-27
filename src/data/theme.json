@@ -1,0 +1,17 @@
+{
+  "primary_color": "#3b82f6",
+  "secondary_color": "#8b5cf6",
+  "accent_color": "#f59e0b",
+  "success_color": "#10b981",
+  "warning_color": "#f59e0b",
+  "error_color": "#ef4444",
+  "bg_primary": "#ffffff",
+  "bg_secondary": "#f9fafb",
+  "text_primary": "#111827",
+  "text_secondary": "#6b7280",
+  "font_family": "Inter, system-ui, sans-serif",
+  "font_size_base": "16px",
+  "border_radius_sm": "4px",
+  "border_radius_md": "8px",
+  "border_radius_lg": "12px"
+}
