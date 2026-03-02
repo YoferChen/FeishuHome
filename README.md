@@ -15,32 +15,34 @@
 
 ## 📸 预览
 
-### 首页
+### 桌面端
 
 <table>
   <tr>
-    <td width="50%">
+    <td>
+      <p align="center"><b>首页</b></p>
       <img src="public/images/HomePage_PC.jpeg" alt="首页 - 桌面端" />
-      <p align="center">桌面端</p>
     </td>
-    <td width="50%">
-      <img src="public/images/HomePage_Phone.jpeg" alt="首页 - 移动端" />
-      <p align="center">移动端</p>
+  </tr>
+  <tr>
+    <td>
+      <p align="center"><b>博客列表</b></p>
+      <img src="public/images/BlogPage_PC.jpeg" alt="博客列表 - 桌面端" />
     </td>
   </tr>
 </table>
 
-### 博客列表
+### 移动端
 
 <table>
   <tr>
     <td width="50%">
-      <img src="public/images/BlogPage_PC.jpeg" alt="博客列表 - 桌面端" />
-      <p align="center">桌面端</p>
+      <p align="center"><b>首页</b></p>
+      <img src="public/images/HomePage_Phone.jpeg" alt="首页 - 移动端" />
     </td>
     <td width="50%">
+      <p align="center"><b>博客列表</b></p>
       <img src="public/images/BlogPage_Phone.jpeg" alt="博客列表 - 移动端" />
-      <p align="center">移动端</p>
     </td>
   </tr>
 </table>
