@@ -315,13 +315,17 @@ describe('useBlogData', () => {
   })
   
   it('getBlogById 应该返回正确的博客', async () => {
-    const { fetchBlogs, getBlogById } = useBlogData()
+    const { fetchBlogs, getBlogById, blogs } = useBlogData()
     
     await fetchBlogs()
     
-    const blog = getBlogById('1')
+    // 使用实际存在的博客 ID（从加载的数据中获取第一个博客的 ID）
+    const firstBlogId = blogs.value[0]?.id
+    expect(firstBlogId).toBeDefined()
+    
+    const blog = getBlogById(firstBlogId!)
     expect(blog).toBeDefined()
-    expect(blog?.id).toBe('1')
+    expect(blog?.id).toBe(firstBlogId)
   })
   
   it('getBlogById 应该返回 undefined 当博客不存在', async () => {
