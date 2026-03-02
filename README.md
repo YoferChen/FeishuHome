@@ -1,5 +1,7 @@
 # 飞书博客主页
 
+中文 | [English](README_EN.md)
+
 一个基于 Vue 3 + TypeScript + Vite 的现代化个人博客主页，集成飞书多维表格作为内容管理系统。
 
 ## ✨ 特性
