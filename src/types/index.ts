@@ -165,6 +165,8 @@ export interface SiteConfig {
   basePath: string
   /** 个人信息配置 */
   profile: ProfileConfig
+  /** GitHub 仓库地址 */
+  githubRepo: string
   /** 教育经历列表 */
   education: Education[]
   /** 项目经历列表 */

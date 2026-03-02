@@ -63,6 +63,11 @@ export const siteConfig: SiteConfig = {
     email: profileData.email || '',
     socialLinks: profileData.socialLinks || []
   },
+  
+  /**
+   * GitHub 仓库地址
+   */
+  githubRepo: siteConfigData.github_repo || 'https://github.com/YoferChen/FeishuHome',
 
   // ============================================
   // 教育经历配置（从飞书多维表格获取）
