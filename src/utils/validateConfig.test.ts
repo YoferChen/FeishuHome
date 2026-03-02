@@ -23,6 +23,7 @@ function createValidConfig(): SiteConfig {
       nickname: '测试用户',
       bio: '这是个人简介'
     },
+    githubRepo: 'https://github.com/test/test-repo',
     education: [
       {
         school: '测试大学',
