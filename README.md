@@ -13,6 +13,38 @@
 - ⚡ **自动部署**: GitHub Actions 自动构建和部署
 - 🧪 **完整测试**: 167 个单元测试，确保代码质量
 
+## 📸 预览
+
+### 首页
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="public/images/HomePage_PC.jpeg" alt="首页 - 桌面端" />
+      <p align="center">桌面端</p>
+    </td>
+    <td width="50%">
+      <img src="public/images/HomePage_Phone.jpeg" alt="首页 - 移动端" />
+      <p align="center">移动端</p>
+    </td>
+  </tr>
+</table>
+
+### 博客列表
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="public/images/BlogPage_PC.jpeg" alt="博客列表 - 桌面端" />
+      <p align="center">桌面端</p>
+    </td>
+    <td width="50%">
+      <img src="public/images/BlogPage_Phone.jpeg" alt="博客列表 - 移动端" />
+      <p align="center">移动端</p>
+    </td>
+  </tr>
+</table>
+
 ## 🏗️ 技术架构
 
 ### 前端技术栈
